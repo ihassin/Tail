@@ -3,7 +3,7 @@ Tail & TailUI
 
 Tail is a real-time file monitor and viewer, is a Windows port of the UNIX 'tail -f' command, it can be used to view the end of a growing file.
 
-Tail can display the last part of a large file quickly without loading the entire file. And it is a file viewer only, it makes no changes to log files.
+Tail can display the last part of a large file quickly without loading the entire file. And it is a file viewer only, it makes no changes to file.
 
 TailUI is the GUI program of Tail.
 
@@ -48,7 +48,7 @@ https://github.com/gaochundong/Tail/issues
 Authors
 -------
 
-**Dennis Gao**
+**Dennis Gao** 
 
 + http://about.me/gaochundong
 
