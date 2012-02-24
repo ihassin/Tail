@@ -1,34 +1,41 @@
-Tail
+Tail & TailUI
 =================
 
-Tail is a real-time log monitor and viewer, is a windows port of the UNIX 'tail -f' command, it can be used to view the end of a growing file.
+Tail is a real-time file monitor and viewer, is a Windows port of the UNIX 'tail -f' command, it can be used to view the end of a growing file.
 
 Tail can display the last part of a large file quickly without loading the entire file. And it is a file viewer only, it makes no changes to log files.
+
+TailUI is the GUI program of Tail.
 
 
 Options
 ----------
 
--f, --follow[=name]
+**-f, --follow[=name]** 
 Output appended data as the file grows; -f, --follow, and --follow=name are equivalent.
 
--r, --retry
+**-r, --retry** 
 Keep trying to open a file even if it is inaccessible when tail starts or if it becomes inaccessible later; useful when following by name, i.e., with --follow=name.
 
--F same as --follow=name --retry
+**-F** same as --follow=name --retry
 
--n, --lines=N
+**-n, --lines=N**
 Output the last N lines, instead of the last 10.
 
--s, --sleep-interval=S
+**-s, --sleep-interval=S**
 With -f, sleep for approximately S seconds (default 1) between iterations.
 
--h, --help
+**-h, --help**
 Display this help and exit.
 
--v, --version
+**-v, --version**
 Output version information and exit.
 
+
+Environment Requirement
+-----------------------
+
+Microsoft .NET Framework 4
 
 Bug tracker
 -----------
