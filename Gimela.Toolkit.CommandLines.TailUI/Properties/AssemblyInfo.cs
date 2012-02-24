@@ -8,10 +8,10 @@ using System.Windows;
 [assembly: AssemblyTitle("Gimela.Toolkit.CommandLines.TailUI")]
 [assembly: AssemblyDescription("Gimela.Toolkit.CommandLines.TailUI")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Gimela Technology Co., Ltd.")]
+[assembly: AssemblyCompany("Chundong Gao")]
 [assembly: AssemblyProduct("Gimela Toolkit")]
-[assembly: AssemblyCopyright("Copyright © 2011-2012 Gimela Technologies Co., Ltd. All rights reserved.")]
-[assembly: AssemblyTrademark("Gimela")]
+[assembly: AssemblyCopyright("Copyright © 2011-2012 Chundong Gao. All rights reserved.")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
