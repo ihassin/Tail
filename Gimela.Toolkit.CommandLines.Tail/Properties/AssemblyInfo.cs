@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyCompany("Chundong Gao")]
 [assembly: AssemblyProduct("Gimela Toolkit")]
 [assembly: AssemblyCopyright("Copyright © 2011-2012 Chundong Gao. All rights reserved.")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("Gimela")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
