@@ -29,6 +29,8 @@
 using System;
 using System.Threading;
 using System.Windows;
+using System.Windows.Documents;
+using System.Windows.Media;
 using System.Windows.Threading;
 using Gimela.Toolkit.CommandLines.Foundation;
 using Gimela.Toolkit.CommandLines.Tail;
@@ -50,7 +52,7 @@ namespace Gimela.Toolkit.CommandLines.TailUI
     private void OnOpenFileButtonClick(object sender, RoutedEventArgs e)
     {
       Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-      dlg.Filter = "Log files (*.log)|*.log|Text documents (*.txt)|*.txt|All files (*.*)|*.*"; 
+      dlg.Filter = "Log files (*.log)|*.log|Text documents (*.txt)|*.txt|All files (*.*)|*.*";
       dlg.FilterIndex = 3;
 
       Nullable<bool> result = dlg.ShowDialog();
@@ -145,7 +147,20 @@ namespace Gimela.Toolkit.CommandLines.TailUI
       this.Dispatcher.Invoke(DispatcherPriority.Normal,
         new Action(() =>
         {
-          tbFileData.AppendText(e.Data);
+          string[] list = e.Data.Trim(new char[] { '\r' }).Split(new char[] { '\n' });
+          foreach (var item in list)
+          {
+            if (item.ToUpperInvariant().Contains(@"EXCEPTION"))
+            {
+              tbFileData.Document.Blocks.Add(new Paragraph(new Run(item) { Foreground = Brushes.Red }));
+              tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
+            }
+            else
+            {
+              tbFileData.AppendText(item);
+            }
+          }
+
           tbFileData.ScrollToEnd();
         }));
     }
