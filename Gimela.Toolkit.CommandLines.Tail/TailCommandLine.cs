@@ -45,7 +45,8 @@ namespace Gimela.Toolkit.CommandLines.Tail
 
     private TailCommandLineOptions tailOptions;
     private Timer monitoringFileTimer = null;
-    private bool isMonitoring = false;
+    private object monitoringFileLocker = new object();
+    private volatile bool isMonitoring = false;
     private FileSystemWatcher fileSystemWatcher = null;
     private long previousSeekPosition = 0;
     private int maxReadBytes = 1024 * 16;
@@ -191,16 +192,13 @@ namespace Gimela.Toolkit.CommandLines.Tail
 
     private void ReadFile()
     {
-      lock (this)
+      if (this.previousSeekPosition == 0)
       {
-        if (this.previousSeekPosition == 0)
-        {
-          ReadFirstTime();
-        }
-        else
-        {
-          ReadContinue();
-        }
+        ReadFirstTime();
+      }
+      else
+      {
+        ReadContinue();
       }
     }
 
@@ -279,7 +277,7 @@ namespace Gimela.Toolkit.CommandLines.Tail
           }
 
           string data = encoding.GetString(transferBuffer, 0, reverseCount);
-          RaiseCommandLineDataChanged(this, data + Environment.NewLine);
+          RaiseCommandLineDataChanged(this, data);
         }
       }
     }
@@ -391,39 +389,40 @@ namespace Gimela.Toolkit.CommandLines.Tail
     {
       if (!isMonitoring)
       {
-        isMonitoring = true;
-
-        FileInfo targetFile = new FileInfo(state.ToString());
-        if (targetFile.Exists)
+        lock (monitoringFileLocker)
         {
-          if (tailOptions.IsSetFollow)
-          {
-            if (targetFile.Length > this.previousSeekPosition)
-            {
-              ReadFile();
-            }
-          }
-          else
-          {
-            if (targetFile.Length > readBytesCount && readLineCount < tailOptions.OutputLines)
-            {
-              ReadFile();
-            }
-          }
-        }
+          isMonitoring = true;
 
-        isMonitoring = false;
+          FileInfo targetFile = new FileInfo(state.ToString());
+          if (targetFile.Exists)
+          {
+            if (tailOptions.IsSetFollow)
+            {
+              if (targetFile.Length > this.previousSeekPosition)
+              {
+                ReadFile();
+              }
+            }
+            else
+            {
+              if (targetFile.Length > readBytesCount && readLineCount < tailOptions.OutputLines)
+              {
+                ReadFile();
+              }
+            }
+          }
+
+          isMonitoring = false;
+        }
       }
     }
 
     private void OnFileCreated(object source, FileSystemEventArgs e)
     {
-      ReadFile();
     }
 
     private void OnFileChanged(object sender, FileSystemEventArgs e)
     {
-      ReadFile();
     }
 
     private void OnFileRenamed(object sender, RenamedEventArgs e)
