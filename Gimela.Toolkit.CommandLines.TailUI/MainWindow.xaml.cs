@@ -43,6 +43,7 @@ namespace Gimela.Toolkit.CommandLines.TailUI
     private const string CancelCommand = @"Cancel";
 
     private TailCommandLine tail = null;
+    private static readonly int maxLineCount = 1000;
 
     public MainWindow()
     {
@@ -147,6 +148,11 @@ namespace Gimela.Toolkit.CommandLines.TailUI
       this.Dispatcher.Invoke(DispatcherPriority.Normal,
         new Action(() =>
         {
+          if (tbFileData.Document.Blocks.Count > maxLineCount)
+          {
+            tbFileData.Document.Blocks.Clear();
+          }
+
           string[] list = e.Data.TrimEnd(new char[] { '\n' }).Replace("\r", "").Split(new char[] { '\n' });
           for (int i = 0; i < list.Length; i++)
           {
