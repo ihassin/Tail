@@ -33,7 +33,7 @@ namespace Gimela.Toolkit.CommandLines.Tail
     internal TailCommandLineOptions()
     {
       OutputLines = 20;
-      SleepInterval = 1;
+      SleepInterval = 2;
     }
 
     internal bool IsSetRetry { get; set; }

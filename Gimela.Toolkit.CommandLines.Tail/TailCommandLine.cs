@@ -54,7 +54,7 @@ namespace Gimela.Toolkit.CommandLines.Tail
     private Encoding encoding = Encoding.ASCII;
     private byte[] newLine = Encoding.ASCII.GetBytes("\n");
     private long readLineCount = 0;
-    
+
     #endregion
 
     #region Constructors

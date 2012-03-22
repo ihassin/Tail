@@ -43,7 +43,8 @@ namespace Gimela.Toolkit.CommandLines.TailUI
     private const string CancelCommand = @"Cancel";
 
     private TailCommandLine tail = null;
-    private static readonly int maxLineCount = 1000;
+    private static readonly int maxLineCount = 5000;
+    private static readonly object tailLocker = new object();
 
     public MainWindow()
     {
@@ -137,9 +138,13 @@ namespace Gimela.Toolkit.CommandLines.TailUI
       this.Dispatcher.Invoke(DispatcherPriority.Normal,
         new Action(() =>
         {
-          tbFileData.AppendText(e.Exception.Message);
-          tbFileData.ScrollToEnd();
-          OnTailButtonClick(sender, new RoutedEventArgs());
+          lock (tailLocker)
+          {
+            tbFileData.AppendText(e.Exception.Message);
+            tbFileData.ScrollToEnd();
+
+            OnTailButtonClick(sender, new RoutedEventArgs());
+          }
         }));
     }
 
@@ -148,52 +153,55 @@ namespace Gimela.Toolkit.CommandLines.TailUI
       this.Dispatcher.Invoke(DispatcherPriority.Normal,
         new Action(() =>
         {
-          if (tbFileData.Document.Blocks.Count > maxLineCount)
+          lock (tailLocker)
           {
-            tbFileData.Document.Blocks.Clear();
-          }
+            if (tbFileData.Document.Blocks.Count > maxLineCount)
+            {
+              tbFileData.Document.Blocks.Clear();
+            }
 
-          string[] list = e.Data.TrimEnd(new char[] { '\n' }).Replace("\r", "").Split(new char[] { '\n' });
-          for (int i = 0; i < list.Length; i++)
-          {
-            if (list[i].ToUpperInvariant().Contains(@"EXCEPTION"))
+            string[] list = e.Data.TrimEnd(new char[] { '\n' }).Replace("\r", "").Split(new char[] { '\n' });
+            for (int i = 0; i < list.Length; i++)
             {
-              tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Red }));
-              tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
-            }
-            else if (list[i].ToUpperInvariant().Contains(@"CANNOT"))
-            {
-              tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
-              tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
-            }
-            else if (list[i].ToUpperInvariant().Contains(@"CAN NOT"))
-            {
-              tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
-              tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
-            }
-            else if (list[i].ToUpperInvariant().Contains(@"COULD NOT"))
-            {
-              tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
-              tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
-            }
-            else
-            {
-              if (i == list.Length - 1 && !e.Data.EndsWith("\n", StringComparison.CurrentCulture))
+              if (list[i].ToUpperInvariant().Contains(@"EXCEPTION"))
               {
-                tbFileData.AppendText(list[i]);
+                tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Red }));
+                tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
+              }
+              else if (list[i].ToUpperInvariant().Contains(@"CANNOT"))
+              {
+                tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
+                tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
+              }
+              else if (list[i].ToUpperInvariant().Contains(@"CAN NOT"))
+              {
+                tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
+                tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
+              }
+              else if (list[i].ToUpperInvariant().Contains(@"COULD NOT"))
+              {
+                tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
+                tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
               }
               else
               {
-                if (!string.IsNullOrEmpty(list[i]))
+                if (i == list.Length - 1 && !e.Data.EndsWith("\n", StringComparison.CurrentCulture))
                 {
                   tbFileData.AppendText(list[i]);
                 }
-                tbFileData.AppendText(Environment.NewLine);
+                else
+                {
+                  if (!string.IsNullOrEmpty(list[i]))
+                  {
+                    tbFileData.AppendText(list[i]);
+                  }
+                  tbFileData.AppendText(Environment.NewLine);
+                }
               }
             }
-          }
 
-          tbFileData.ScrollToEnd();
+            tbFileData.ScrollToEnd();
+          }
         }));
     }
   }

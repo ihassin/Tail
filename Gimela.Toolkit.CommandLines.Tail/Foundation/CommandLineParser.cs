@@ -136,7 +136,7 @@ namespace Gimela.Toolkit.CommandLines.Foundation
             }
             else
             {
-              cmdOptions.Arguments.Add(arg, value);
+              cmdOptions.Arguments.Add(arg, value.TrimStart('\'').TrimEnd('\''));
             }
           }
           else
@@ -146,7 +146,7 @@ namespace Gimela.Toolkit.CommandLines.Foundation
               throw new CommandLineException(string.Format(CultureInfo.CurrentCulture,
                 "Option used in invalid context -- {0}", "option with the same argument."));
 
-            cmdOptions.Parameters.Add(token);
+            cmdOptions.Parameters.Add(token.TrimStart('\'').TrimEnd('\''));
           }
 
           index++;
