@@ -5,6 +5,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gimela.Toolkit.CommandLines
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gimela.Toolkit.CommandLines.TailUI", "Gimela.Toolkit.CommandLines.TailUI\Gimela.Toolkit.CommandLines.TailUI.csproj", "{3D6C3F88-AA04-4982-BAB6-4C1D45EF7FCD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{4A0B5DBB-2666-4ACB-A8F0-2E93DE56EB47}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
