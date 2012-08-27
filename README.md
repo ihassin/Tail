@@ -48,9 +48,7 @@ Have a bug? Please create an issue here on GitHub!
 Authors
 -------
 
-**Dennis Gao** 
-
-+ http://about.me/gaochundong
++ **Dennis Gao** http://about.me/gaochundong
 
 
 Copyright and license
