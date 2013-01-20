@@ -1,5 +1,7 @@
 obj/*
 Bin/*
+**/Bin/*
+**/obj/*
 *.suo
 *.DotSettings
 
