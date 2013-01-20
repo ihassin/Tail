@@ -1,7 +1,0 @@
-E:\Projects\GitHub\Tail\Bin\Debug\tail.exe
-E:\Projects\GitHub\Tail\Bin\Debug\tail.pdb
-E:\Projects\GitHub\Tail\Bin\Debug\tail.exe.CodeAnalysisLog.xml
-E:\Projects\GitHub\Tail\Bin\Debug\tail.exe.lastcodeanalysissucceeded
-E:\Projects\GitHub\Tail\Gimela.Toolkit.CommandLines.Tail\obj\x86\Debug\ResolveAssemblyReference.cache
-E:\Projects\GitHub\Tail\Gimela.Toolkit.CommandLines.Tail\obj\x86\Debug\tail.exe
-E:\Projects\GitHub\Tail\Gimela.Toolkit.CommandLines.Tail\obj\x86\Debug\tail.pdb
