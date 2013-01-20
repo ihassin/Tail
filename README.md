@@ -1,4 +1,3 @@
-Yeah
 Tail & TailUI
 =================
 
