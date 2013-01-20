@@ -185,27 +185,27 @@ namespace Gimela.Toolkit.CommandLines.TailUI
                 {
                     tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
                     tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
-            }
-            else
-              {
-                if (i == list.Length - 1 && !e.Data.EndsWith("\n", StringComparison.CurrentCulture))
-                {
-                  tbFileData.AppendText(list[i]);
                 }
                 else
-                {
-                  if (!string.IsNullOrEmpty(list[i]))
                   {
-                    tbFileData.AppendText(list[i]);
+                    if (i == list.Length - 1 && !e.Data.EndsWith("\n", StringComparison.CurrentCulture))
+                    {
+                      tbFileData.AppendText(list[i]);
+                    }
+                    else
+                    {
+                      if (!string.IsNullOrEmpty(list[i]))
+                      {
+                        tbFileData.AppendText(list[i]);
+                      }
+                      tbFileData.AppendText(Environment.NewLine);
+                    }
                   }
-                  tbFileData.AppendText(Environment.NewLine);
                 }
-              }
-            }
 
-            tbFileData.ScrollToEnd();
-          }
-        }));
-    }
+                tbFileData.ScrollToEnd();
+              }
+            }));
+        }
   }
 }
