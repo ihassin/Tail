@@ -1,5 +1,5 @@
-**/obj/*
+obj/*
 Bin/*
-**/*.suo
-**/*.DotSettings
+*.suo
+*.DotSettings
 
