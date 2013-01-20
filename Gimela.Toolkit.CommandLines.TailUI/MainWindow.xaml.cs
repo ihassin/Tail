@@ -163,27 +163,30 @@ namespace Gimela.Toolkit.CommandLines.TailUI
             string[] list = e.Data.TrimEnd(new char[] { '\n' }).Replace("\r", "").Split(new char[] { '\n' });
             for (int i = 0; i < list.Length; i++)
             {
-              if (list[i].ToUpperInvariant().Contains(@"EXCEPTION"))
-              {
-                tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Red }));
-                tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
-              }
-              else if (list[i].ToUpperInvariant().Contains(@"CANNOT"))
-              {
-                tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
-                tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
-              }
-              else if (list[i].ToUpperInvariant().Contains(@"CAN NOT"))
-              {
-                tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
-                tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
-              }
-              else if (list[i].ToUpperInvariant().Contains(@"COULD NOT"))
-              {
-                tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
-                tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
-              }
-              else
+              string line = list[i].ToUpperInvariant();
+	                    Boolean isError = 
+			                      line.Contains(@"EXCEPTION") ||
+					                        line.Contains(@"FATAL");
+								
+								              Boolean isWarning = 
+									                      line.Contains(@"CAN NOT")                   ||
+											                      line.Contains(@"CANNOT")                    ||
+													                      line.Contains(@"COULD NOT")                 ||
+															                      line.Contains(@"DEBUG")                     ||
+																	                      line.Contains(@"WARNING")                   ||
+																			                      line.Contains(@"WARN");
+																					      
+																					                    if (isError)
+																							                  {
+																									                  tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Red }));
+																											                  tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
+																													                }
+																															              else if (isWarning)
+																																                    {
+																																		                    tbFileData.Document.Blocks.Add(new Paragraph(new Run(list[i]) { Foreground = Brushes.Yellow }));
+																																				                    tbFileData.Document.Blocks.Add(new Paragraph(new Run()));
+																																						                  }
+																																								  else
               {
                 if (i == list.Length - 1 && !e.Data.EndsWith("\n", StringComparison.CurrentCulture))
                 {
